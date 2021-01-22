@@ -1,0 +1,143 @@
+@import "reset";
+
+@import "design";
+
+
+* {
+    box-sizing: border-box;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    background-color: map-get($colors, accent);
+    width: 70%;
+    height: 70px;
+    font-size: 1em;
+    font-family: $fontFamily;
+    font-weight: map-get($fontWeight, bold);
+    color: map-get($colors, text-background);
+    &:hover {
+        cursor: pointer;
+        background-color: darken(map-get($colors, accent), 15%);
+    }
+}
+
+.container {
+    font-family: $fontFamily;
+    font-size: 16px;
+
+    width: 100vw;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 10vw 1fr 1fr 1fr 10vw;
+    grid-template-rows: 100px auto 100px;
+    grid-template-areas: 
+        "header header header header header"
+        ". main main main ."
+        "footer footer footer footer footer";
+    
+    background-color: map-get($colors, main-background);
+
+    .header {
+        grid-area: header;
+    }
+    .main {
+        grid-area: main;
+    }
+    .footer {
+        grid-area: footer;
+    }
+}
+
+
+@mixin position ($col_start, $col_end, $row_start, $row_end) {
+    grid-column-start: $col_start;
+    grid-column-end: $col_end;
+    grid-row-start: $row_start;
+    grid-row-end: $row_end;
+};
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    .main_card {
+        width: 70%;
+        height: auto; 
+        .main_card_intro {
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 40px;
+            .fas {
+                font-size: 5em;
+            }
+            .main_card_intro_header {
+                font-size: 1.5em;
+                font-weight: map-get($fontWeight, bold)
+            }   
+        }
+        .main_card_desc {
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            line-height: 1.5;
+        }
+    }
+    .main_about {
+        @include position(1, 2, 1, 2)
+    }
+    .main_cv {
+        @include position(2, 3, 1, 2)
+    }
+    .main_portfolio {
+        @include position(3, 4, 1, 2)
+    }
+}
+
+
+.main_card_intro {
+    position: relative;
+    z-index: 2;
+    background-color: map-get($colors, main-background);
+    color: map-get($colors, text-background);
+    box-shadow: 0 20px 35px darken(map-get($colors, main-background), 15%);
+    transition: 0.5s;
+    transform: translateY(125px);
+    .fas, .main_card_intro_header {
+        opacity: 0.2;
+    }    
+}
+
+.main_card_desc {
+    position: relative;
+    z-index: 1;
+    background-color: map-get($colors, text-background);
+    transition: 0.5s;
+    transform: translateY(-125px);
+    color: map-get($colors, main-background);
+}
+
+.main_card {
+    &:hover {
+        .main_card_intro {
+            background-color: map-get($colors, icon-background);
+            box-shadow: none;
+            transform: translateY(0);
+            .fas, .main_card_intro_header {
+                opacity: 1;
+            }
+        }
+        .main_card_desc {
+            transform: translateY(0);
+        }
+    }
+}
